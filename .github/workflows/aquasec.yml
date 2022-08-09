@@ -1,27 +1,21 @@
-name: build
+name: "Trivy Scan"
 on:
   push:
     branches:
-    - master
+      - master
+      - main
   pull_request:
-jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-18.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    branches:
+      - master
+      - main
+  workflow_dispatch:
+  
+permissions: write-all
 
-      - name: Run Trivy vulnerability scanner in IaC mode
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          security-checks: 'vuln,config,secret'
-          hide-progress: false
-          format: 'table'
-        env:
-          AQUA_KEY: ${{ secrets.AQUA_KEY }}
-          AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
-          TRIVY_RUN_AS_PLUGIN: 'aqua'
-          TRIGGERED_BY: 'PUSH'
-          GITHUB_TOKEN: ${{ github.token }}
+jobs:
+  aqua-workflow:
+      uses: argon-gh-test/github-workflows/.github/workflows/aquasec-scan.yml@master
+      secrets:
+        gh_token: "${{ github.token }}"
+        aq_key: "${{ secrets.AQUA_KEY }}"
+        aq_secret: "${{ secrets.AQUA_SECRET }}"
