@@ -17,5 +17,5 @@ jobs:
       uses: argon-gh-test/github-workflows/.github/workflows/aquasec-scan.yml@main
       secrets:
         gh_token: "${{ github.token }}"
-        aq_key: "${{ secrets.AQUA_KEY }}"
-        aq_secret: "${{ secrets.AQUA_SECRET }}"
+        AQUA_KEY: "${{ secrets.AQUA_KEY }}"
+        AQUA_SECRET: "${{ secrets.AQUA_SECRET }}"
