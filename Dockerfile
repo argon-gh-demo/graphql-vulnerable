@@ -9,6 +9,7 @@ WORKDIR $TARGET_FOLDER/
 
 RUN apk add --update curl
 
+
 COPY requirements.txt /opt/dvga/
 RUN pip install -r requirements.txt
 
