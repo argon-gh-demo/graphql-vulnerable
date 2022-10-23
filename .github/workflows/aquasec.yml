@@ -19,3 +19,6 @@ jobs:
         gh_token: "${{ github.token }}"
         AQUA_KEY: "${{ secrets.AQUA_KEY }}"
         AQUA_SECRET: "${{ secrets.AQUA_SECRET }}"
+env:
+  package_json: "1"
+      
