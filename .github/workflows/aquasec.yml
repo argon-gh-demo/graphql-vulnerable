@@ -6,4 +6,6 @@ on:
 jobs:
   aqua-scanner:
     uses: argon-gh-demo/github-workflows/.github/workflows/aquasec-scan.yml@main
-    secrets: inherit
+    secrets: 
+      AQUA_KEY: ${{ secrets.AQUA_KEY }}
+      AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
