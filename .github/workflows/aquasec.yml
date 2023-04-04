@@ -9,3 +9,10 @@ jobs:
     secrets: 
       AQUA_KEY: ${{ secrets.AQUA_KEY }}
       AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
+
+  build-docker:
+    uses: argon-gh-demo/github-workflows/.github/workflows/build-docker-billy.yml@main
+    secrets: 
+      AQUA_KEY: ${{ secrets.AQUA_KEY }}
+      AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
