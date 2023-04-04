@@ -1,25 +1,9 @@
 name: Aqua
-on:
+on: 
   push:
     branches:
       - master
 jobs:
-  aqua:
-    name: Aqua scanner
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Run Aqua scanner
-        uses: docker://aquasec/aqua-scanner
-        with:
-          args: trivy fs --scanners config,vuln,secret .
-          # To customize which severities to scan for, add the following flag: --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
-          # To enable SAST scanning, add: --sast
-          # To enable npm/dotnet non-lock file scanning, add: --package-json / --dotnet-proj
-        env:
-          AQUA_KEY: ${{ secrets.AQUA_KEY }}
-          AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
-          TRIVY_RUN_AS_PLUGIN: 'aqua'
-          # For http/https proxy configuration add env vars: HTTP_PROXY/HTTPS_PROXY, CA-CRET (path to CA certificate)
+  aqua-scanner:
+    uses: argon-gh-demo/github-workflows/blob/main/.github/workflows/aquasec-scan.yml@main
+    secrets: inherit
