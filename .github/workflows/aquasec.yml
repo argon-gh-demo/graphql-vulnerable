@@ -5,5 +5,5 @@ on:
       - master
 jobs:
   aqua-scanner:
-    uses: argon-gh-demo/github-workflows/blob/main/.github/workflows/aquasec-scan.yml@main
+    uses: argon-gh-demo/github-workflows/.github/workflows/aquasec-scan.yml@main
     secrets: inherit
