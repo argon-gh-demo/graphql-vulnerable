@@ -21,3 +21,28 @@ jobs:
       DOCKERHUB_TOKEN: ${{secrets.DOCKERHUB_TOKEN}}
     with:      
       ARTIFACT_PATH: "saargon/graphql-vuln-ext"
+      
+  image-scan:
+    name: Image Scanning
+    needs: build-docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: docker login
+        run: docker login registry.aquasec.com --token ${AQUA_TOKEN}
+      - name: Run Aqua scanner
+        uses: docker://registry.aquasec.com/scanner:2303.7.8
+        with:
+          args: daemon --token ${AQUA_TOKEN} --host ${AQUA_HOST}
+          # To customize which severities to scan for, add the following flag: --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
+          # To enable SAST scanning, add: --sast
+          # To enable npm/dotnet non-lock file scanning, add: --package-json / --dotnet-proj
+        env:
+          AQUA_KEY: ${{ secrets.AQUA_KEY }}
+          AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
+          GITHUB_TOKEN: ${{ github.token }}
+          AQUA_TOKEN: ${{secrets.AQUA_SCANNER_TOKEN}}
+          AQUA_HOST: ${{secrets.AQUA_SCANNER_HOST}}
+          TRIVY_RUN_AS_PLUGIN: 'aqua'
+      
