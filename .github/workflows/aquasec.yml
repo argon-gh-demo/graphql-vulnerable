@@ -11,10 +11,11 @@ jobs:
       AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
   
   build-image:
+    needs: aqua-scanner
     runs-on: ubuntu-latest
     steps:
       - name: Login to DockerHub
-        uses: docker/login-action@2
+        uses: docker/login-action@v2
         with:
             username: ${{ secrets.DOCKERHUB_USERNAME }}
             password: ${{ secrets.DOCKERHUB_PASSWORD }}
@@ -25,7 +26,7 @@ jobs:
             tags: "saargon/graphql-vuln-ext:${{ github.sha }}"
 
   create-manifest:
-    needs: aqua-scanner
+    needs: build-image
     uses: argon-gh-demo/github-workflows/.github/workflows/billy-ubuntu.yml@main
     secrets: 
       AQUA_KEY: ${{ secrets.AQUA_KEY }}
