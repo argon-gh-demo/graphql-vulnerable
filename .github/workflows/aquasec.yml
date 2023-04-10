@@ -2,17 +2,31 @@ name: Aqua
 on: 
   push:
     branches:
-      - master
+      - rb-repro
 jobs:
   aqua-scanner:
     uses: argon-gh-demo/github-workflows/.github/workflows/aquasec-scan.yml@main
     secrets: 
       AQUA_KEY: ${{ secrets.AQUA_KEY }}
       AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
+  
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to DockerHub
+        uses: docker/login-action@2
+        with:
+            username: ${{ secrets.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+            push: true
+            tags: "saargon/graphql-vuln-ext:${{ github.sha }}"
 
-  build-docker:
+  create-manifest:
     needs: aqua-scanner
-    uses: argon-gh-demo/github-workflows/.github/workflows/build-docker-billy.yml@main
+    uses: argon-gh-demo/github-workflows/.github/workflows/billy-ubuntu.yml@main
     secrets: 
       AQUA_KEY: ${{ secrets.AQUA_KEY }}
       AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
