@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      
 jobs:
   aqua-scanner:
     uses: argon-gh-demo/github-workflows/.github/workflows/aquasec-scan.yml@main
