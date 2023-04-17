@@ -1,8 +1,6 @@
 name: Aqua
 on: 
   push:
-    branches:
-      - master
       
 jobs:
   aqua-scanner:
