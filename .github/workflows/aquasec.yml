@@ -14,4 +14,3 @@ jobs:
       DOCKERHUB_TOKEN: ${{secrets.DOCKERHUB_TOKEN}}
     with:      
       ARTIFACT_PATH: "saargon/graphql-vuln-ext"
-
