@@ -4,7 +4,7 @@ on:
     branches:
       - master
 jobs:
-  scan-build:
+  aqua-scan-build:
     uses: argon-gh-demo/github-workflows/.github/workflows/aqua-scan-build.yml@main
     secrets: 
       AQUA_KEY: ${{ secrets.AQUA_KEY }}
