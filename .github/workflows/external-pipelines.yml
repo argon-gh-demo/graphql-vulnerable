@@ -5,6 +5,17 @@ on:
       - master
 jobs:
   aqua-scan-build:
+    uses: argon-gh-demo/github-workflows/.github/workflows/aqua-scan-build.yml@main
+    secrets: 
+      AQUA_KEY: ${{ secrets.AQUA_KEY }}
+      AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
+      GH_TOKEN: ${{ secrets.github_token }}
+      DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
+      DOCKERHUB_TOKEN: ${{secrets.DOCKERHUB_TOKEN}}
+    with:      
+      ARTIFACT_PATH: "saargon/graphql-vuln-ext"
+  aqua-billy:
+    needs: aqua-scan-build
     uses: argon-gh-demo/github-workflows/.github/workflows/billy-ubuntu.yml@main
     secrets: 
       AQUA_KEY: ${{ secrets.AQUA_KEY }}
@@ -14,3 +25,4 @@ jobs:
       DOCKERHUB_TOKEN: ${{secrets.DOCKERHUB_TOKEN}}
     with:      
       ARTIFACT_PATH: "saargon/graphql-vuln-ext"
+    
